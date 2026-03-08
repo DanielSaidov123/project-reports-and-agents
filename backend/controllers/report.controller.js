@@ -91,32 +91,31 @@ export const filterReport = async (req, res) => {
     }
 
     res.status(200).json(report);
-
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-export const getReportBiId = async (req,res)=>{
+export const getReportBiId = async (req, res) => {
   try {
-    const role = req.user.role 
-    
-    const id =req.params.id
-    
-    const report = await Report.findOne({_id:id})
+    const role = req.user.role;
 
-    if(!report){
-      return res.status(404).json({error : "report is not defind"})
-     };
+    const id = req.params.id;
 
-    if(req.user.id !==report.userId){
-      return res.status(403).json({error : "You do not have permission to access this report"})
-
-     };
+    const report = await Report.findOne({ _id: id });
     
-     res.status(200).json(report)
+    if (!report) {
+      return res.status(404).json({ error: "report is not defind" });
+    }
+    if (role === "agent") {
+      if (req.user.id !== report.userId) {
+        return res
+          .status(403)
+          .json({ error: "You do not have permission to access this report" });
+      }
+    }
+    res.status(200).json(report);
   } catch (error) {
     res.status(500).json({ error: error.message });
-    
   }
-}
+};

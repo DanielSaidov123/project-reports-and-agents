@@ -7,9 +7,9 @@ import { checkAuth } from "../middleware/auth.js"
 const router = express.Router()
 const upload = multer({ dest: "uploads/" });
 
+router.get('/:id' ,checkAuth, getReportBiId)
 router.post('/create/form' ,checkAuth,createReportForm)
 router.post('/create/csv' ,checkAuth,upload.single("file"),createReportCsv)
 router.get('/filter' ,checkAuth, filterReport)
-router.get('/:id' ,checkAuth, getReportBiId)
 
 export default router
