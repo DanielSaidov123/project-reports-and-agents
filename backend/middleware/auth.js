@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 export const checkAuth = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
-    return res.status(401).json({ message: "Not logged in" });
+    return res.status(403).json({ message: "Not logged in" });
   }
 
   try {

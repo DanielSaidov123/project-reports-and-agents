@@ -1,5 +1,5 @@
 import express from "express"
-import { createReportCsv, createReportForm, filterReport } from "../controllers/report.controller.js"
+import { createReportCsv, createReportForm, filterReport, getReportBiId } from "../controllers/report.controller.js"
 import { checkAuth } from "../middleware/auth.js"
  import multer from "multer";
 
@@ -10,5 +10,6 @@ const upload = multer({ dest: "uploads/" });
 router.post('/create/form' ,checkAuth,createReportForm)
 router.post('/create/csv' ,checkAuth,upload.single("file"),createReportCsv)
 router.get('/filter' ,checkAuth, filterReport)
+router.get('/:id' ,checkAuth, getReportBiId)
 
 export default router
