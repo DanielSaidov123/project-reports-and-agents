@@ -33,10 +33,10 @@ export default function LoginComponents() {
       }
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
-        const serverError = err.response?.data?.error || "פרטי התחברות שגויים";
+        const serverError = err.response?.data?.error || "Incorrect login details";
         setError(serverError);
       } else {
-        setError("שגיאה בלתי צפויה");
+        setError("Unexpected error");
       }
       console.error("Login Error:", err);
     } finally {
