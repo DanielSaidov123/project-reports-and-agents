@@ -6,6 +6,7 @@ import HomeAdmin from "./Page/HomeAdmin";
 import UploadFORM from "./Page/UploadFORM";
 import ApplyPassword from "./Page/ApplyPassword";
 import ProtectedRoute from "./components/ProtectedRoute"
+import UploadCSV from "./Page/UploadCSV";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/HomeAgent" element={<HomeAgent />} />
         <Route path="/HomeAdmin" element={<HomeAdmin />} />
         <Route path="/UploadFORM" element={<UploadFORM />} />
+        <Route path="/UploadCSV" element={<UploadCSV />} />
         <Route path="/ApplyPassword" element={<ApplyPassword />} />
         </Route>
       </Routes>

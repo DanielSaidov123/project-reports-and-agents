@@ -11,7 +11,7 @@ export default function HomeAgentComponents() {
           <h4>New Report</h4>
           <p>sybmit a new report</p>
         </div>
-        <div className="div-grid">
+        <div className="div-grid" onClick={()=>navigate('/UploadCSV')}>
           <h1>CSV</h1>
           <h4>CSV Upload</h4>
           <p>Import reports from a csv file</p>
