@@ -19,7 +19,7 @@ export default function LoginComponents() {
   });
 
   const navigate = useNavigate();
-  const {loginUser } = useAuthStore()
+  const {loginUser} = useAuthStore()
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null); 
@@ -33,6 +33,7 @@ export default function LoginComponents() {
       }else{
       navigate("/HomeAdmin");
       }
+
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         const serverError = err.response?.data?.error || "Incorrect login details";
@@ -47,7 +48,7 @@ export default function LoginComponents() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="form-login">
+    <form onSubmit={handleSubmit} className="form">
       <h2>Sign In</h2>
       
       {error && (
