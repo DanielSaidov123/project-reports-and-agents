@@ -1,1 +1,22 @@
+.Login{
+  display: flex;
+  flex-direction: column;
+  margin-left: 35%;
+  margin-right: 35%;
+  margin-top: 15%;
+  text-align: center;
+  color: white;
+}
 
+.form-login{
+  border: 2px solid;
+   margin-left: 5%;
+  margin-right: 5%;
+  border-radius: 10px;
+  padding: 2rem;
+  background-color: rgb(53, 53, 116);
+}
+
+.div-form-login{
+  margin: 2rem;
+}
