@@ -25,7 +25,7 @@ const reportSchema = new mongoose.Schema(
     },
     sourceType: {
       type: String,
-      enum: ["agent", "admin","csv"],
+      enum: ["agent", "admin","csv","form"],
       default: "agent",
     },
   },
