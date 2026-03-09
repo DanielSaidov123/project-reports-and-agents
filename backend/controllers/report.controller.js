@@ -2,7 +2,7 @@ import { Report } from "../db/tableReports.js";
 import { parse } from "csv-parse/sync";
 export const createReportForm = async (req, res) => {
   try {
-   
+    
     const { category, urgency, message, sourceType } = req.body;
 
     if (!category || !urgency || !message) {
