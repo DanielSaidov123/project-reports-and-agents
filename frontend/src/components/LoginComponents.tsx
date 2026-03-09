@@ -25,9 +25,12 @@ export default function LoginComponents() {
     setLoading(true);
 
     try {
-      await login(input);
-      
-      navigate("/");
+      const data=await login(input);
+      if (data.data.role ==="agent") {
+      navigate("/HomeAgent");
+      }else{
+      navigate("/HomeAdmin");
+      }
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         const serverError = err.response?.data?.error || "פרטי התחברות שגויים";
