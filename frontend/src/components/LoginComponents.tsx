@@ -48,7 +48,7 @@ export default function LoginComponents() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="form">
+    <form onSubmit={handleSubmit} className="form-login">
       <h2>Sign In</h2>
       
       {error && (

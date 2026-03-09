@@ -21,6 +21,11 @@ export default function HomeAgentComponents() {
           <h4>My Reports</h4>
           <p>View all reports you have submited</p>
         </div>
+        <div className="div-grid" onClick={()=>navigate('/ApplyPassword')}>
+          <h1>🗝️</h1>
+          <h4>Change password</h4>
+          <p>Change your primary password</p>
+        </div>
       </div>
     </>
   );
