@@ -3,6 +3,7 @@ import React from "react";
 import { login } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; 
+import { useAuthStore } from "../store/useAuthStore";
 
 interface LoginCredentials {
   agentCode: string;
@@ -18,7 +19,7 @@ export default function LoginComponents() {
   });
 
   const navigate = useNavigate();
-
+  const {loginUser } = useAuthStore()
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null); 
@@ -26,6 +27,7 @@ export default function LoginComponents() {
 
     try {
       const data=await login(input);
+      loginUser(data.data.role)
       if (data.data.role ==="agent") {
       navigate("/HomeAgent");
       }else{
