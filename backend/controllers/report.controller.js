@@ -1,5 +1,6 @@
 import { Report } from "../db/tableReports.js";
 import { parse } from "csv-parse/sync";
+import { User } from "../db/tableUsers.js";
 export const createReportForm = async (req, res) => {
   try {
     const { category, urgency, message, sourceType } = req.body;
@@ -93,7 +94,11 @@ export const filterReport = async (req, res) => {
     }
 
     if (req.query.agentCode && role === "admin") {
-      report = report.filter((r) => r.agentCode === req.query.agentCode);
+      const userId = User.findOne({agentCode :req.query.agentCode })
+      if(!userId){
+        return res.status(404).json({error : "agentCode is not defind"})
+       };
+      report = report.filter((r) => r.userId === userId);
     }
 
     res.status(200).json(report);
@@ -126,18 +131,4 @@ export const getReportBiId = async (req, res) => {
   }
 };
 
-export const getReportsAgent = async (req, res) => {
-  try {
-    const userId = req.user.id;
-    let reports = null;
-    if (req.user.role === "admin") {
-      reports = await Report.find();
-    } else {
-      reports = await Report.find({ userId });
-    }
-
-    res.status(200).json(reports);
-  } catch (error) {
-    res.status(500).json({ error: "Server error" });
-  }
-};
+ 

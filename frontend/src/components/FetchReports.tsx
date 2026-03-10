@@ -1,33 +1,93 @@
-import { useEffect, useState } from "react";
-import { getRports } from "../api/axios";
-import { useAuthStore } from "../store/useAuthStore";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import { getRportsfilter } from "../api/axios";
+type Report = {
+  _id: string;
+  category: string;
+  urgency: string;
+  message: string;
+  sourceType: string;
+  imagePath: string | null;
+  createdAt: string;
+};
 export default function FetchReports() {
-  const { reports, setreports } = useAuthStore();
+  const [form, serForm] = useState({
+    category: "",
+    urgency: "low",
+    agentCode: "",
+  });
+  const [reports, setreports] = useState<Report[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [errr, setErrr] = useState<null | string>(null);
-  useEffect(() => {
-    const reportsAgent = async () => {
-      try {
-        setErrr(null);
-        setLoading(true);
-        const data = await getRports();
-        setreports(data.data);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          const servererror = error.response?.data.error || "error";
-          setErrr(servererror);
-        }
-      } finally {
-        setLoading(false);
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      setErrr(null);
+      const filter = {
+        ...(form.category && { category: form.category }),
+        ...(form.agentCode && { agentCode: form.agentCode }),
+        ...(form.urgency && { urgency: form.urgency }),
+      };
+      console.log(filter)
+      const data = await getRportsfilter(filter);
+      console.log(data.data);
+      setreports(data.data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const servererror = error.response?.data?.error;
+        console.log(error)
+        setErrr(servererror);
       }
-    };
-    reportsAgent();
-  }, [setreports]);
-  console.log(reports);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    try {
+      setLoading(true);
+      setErrr(null);
+      const filterdata = async () => {
+        const data = await getRportsfilter({});
+        setreports(data.data);
+      };
+      filterdata();
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const servererror = error.response?.data?.error;
+        setErrr(servererror);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   return (
     <div className="div-table">
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="enter category"
+          value={form.category}
+          onChange={(e) => serForm({ ...form, category: e.target.value })}
+        />
+        <input
+          type="text"
+          placeholder="enter agentCode"
+          value={form.agentCode}
+          onChange={(e) => serForm({ ...form, agentCode: e.target.value })}
+        />
+        <select
+          value={form.urgency}
+          onChange={(e) => serForm({ ...form, urgency: e.target.value })}
+        >
+          <option value="low">low</option>
+          <option value="medium">medium</option>
+          <option value="high">high</option>
+        </select>
+        <button type="submit">SELECT</button>
+      </form>
       {loading && <p>Loading reports...</p>}
       {errr && <p className="error">{errr}</p>}
       <table className="table">
