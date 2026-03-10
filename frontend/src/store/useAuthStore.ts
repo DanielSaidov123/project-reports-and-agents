@@ -2,11 +2,13 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 type Report = {
-  id: string;
+  _id: string;
   category: string;
   urgency: string;
-  message : string,
-  sourceType : string
+  message: string;
+  sourceType: string;
+  imagePath: string | null;
+  createdAt: string;
 };
 
 interface AuthState {
