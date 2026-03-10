@@ -7,6 +7,7 @@ import UploadFORM from "./Page/UploadFORM";
 import ApplyPassword from "./Page/ApplyPassword";
 import ProtectedRoute from "./components/ProtectedRoute"
 import UploadCSV from "./Page/UploadCSV";
+import ReportsMyAgent from "./Page/ReportsMyAgent";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/UploadFORM" element={<UploadFORM />} />
         <Route path="/UploadCSV" element={<UploadCSV />} />
         <Route path="/ApplyPassword" element={<ApplyPassword />} />
+        <Route path="/ReportsMyAgent" element={<ReportsMyAgent />} />
         </Route>
       </Routes>
     </>

@@ -128,3 +128,20 @@ export const getReportBiId = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+export const getReportsAgent = async (req ,res)=>{
+  try {
+    const userId = req.user.id
+
+    const reports = await Report.find({userId})
+
+    if (reports.length<=0) {
+      return res.status(401).json({error : "Id is not defind"})
+    }
+    res.status(200).json(reports)
+    
+  } catch (error) {
+    
+  }
+}

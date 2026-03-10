@@ -11,4 +11,6 @@ export const createRports = (data:object) => API.post("/report/create/form" , da
 
 export const ChangePassword = (data:object)=> API.post("/auth/changePassword" , data)
 
-export const createReportFromCSV = (data:object)=> API.post("report/create/csv" , data)
+export const createReportFromCSV = (data:object)=> API.post("/report/create/csv" , data) 
+
+export const getRports = ()=> API.post("/report") 
