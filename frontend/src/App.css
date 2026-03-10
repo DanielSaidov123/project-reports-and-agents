@@ -139,7 +139,12 @@
   color: #ffffff;
   text-align: center;
 }
-
+.div-table-a {
+  display: flex;
+  justify-content: center; /* מרכז אופקית */
+  align-items: center; /* מרכז אנכית */
+  height: 100%;
+}
 .high {
   background-color: red;
 }
@@ -150,6 +155,9 @@
 
 .low {
   background-color: rgb(89, 148, 0);
+}
+.error {
+  color: rgba(254, 0, 0, 0.7);
 }
 @media (max-width: 768px) {
   .grid {

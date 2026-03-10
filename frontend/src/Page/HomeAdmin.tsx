@@ -1,3 +1,4 @@
+import HomeAdminComponents from "../components/HomeAdminComponents";
 import Navbar from "../components/Navbar.";
 import { useAuthStore } from "../store/useAuthStore";
 
@@ -8,6 +9,7 @@ export default function HomeAdmin() {
       <Navbar />
       <div>
         <h1>welcome to :{user?.role}</h1>
+        <HomeAdminComponents/>
       </div>
     </div>
   );

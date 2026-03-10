@@ -13,4 +13,8 @@ export const ChangePassword = (data:object)=> API.post("/auth/changePassword" , 
 
 export const createReportFromCSV = (data:object)=> API.post("/report/create/csv" , data) 
 
-export const getRports = ()=> API.get("/report") 
+export const getRports = ()=> API.get("/report")
+
+export const signup= (data:object)=> API.post("/auth/signup",data) 
+
+export const getRportsAdmin= ()=> API.get("/users") 

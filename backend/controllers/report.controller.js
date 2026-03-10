@@ -2,7 +2,6 @@ import { Report } from "../db/tableReports.js";
 import { parse } from "csv-parse/sync";
 export const createReportForm = async (req, res) => {
   try {
-    
     const { category, urgency, message, sourceType } = req.body;
 
     if (!category || !urgency || !message) {
@@ -36,14 +35,13 @@ export const createReportForm = async (req, res) => {
   }
 };
 
-
 export const createReportCsv = async (req, res) => {
   try {
-    if (!req.files || !req.files.file) { 
+    if (!req.files || !req.files.file) {
       return res.status(400).json({ error: "CSV file is required" });
     }
 
-    const csvFile = req.files.file; 
+    const csvFile = req.files.file;
     const userId = req.user.id;
 
     const fileContent = csvFile.data.toString("utf8");
@@ -69,7 +67,6 @@ export const createReportCsv = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 export const filterReport = async (req, res) => {
   try {
@@ -129,19 +126,18 @@ export const getReportBiId = async (req, res) => {
   }
 };
 
-
-export const getReportsAgent = async (req ,res)=>{
+export const getReportsAgent = async (req, res) => {
   try {
-    const userId = req.user.id
-
-    const reports = await Report.find({userId})
-
-    if (reports.length<=0) {
-      return res.status(401).json({error : "Id is not defind"})
+    const userId = req.user.id;
+    let reports = null;
+    if (req.user.role === "admin") {
+      reports = await Report.find();
+    } else {
+      reports = await Report.find({ userId });
     }
-    res.status(200).json(reports)
-    
+
+    res.status(200).json(reports);
   } catch (error) {
-    
+    res.status(500).json({ error: "Server error" });
   }
-}
+};

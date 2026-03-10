@@ -10,13 +10,23 @@ type Report = {
   imagePath: string | null;
   createdAt: string;
 };
+type User = {
+  _id: string;
+  agentCode: string;
+  fullName: string;
+  SourceType: string;
+  role:string
+  createdAt: string;
+};
 
 interface AuthState {
   user: { role: "admin" | "agent" } | null;
   reports: Report[];
+  reportsAdmin: User[];
   loginUser: (role: "admin" | "agent") => void;
   logout: () => void;
   setreports: (data: Report[]) => void;
+  setReportsAdmin: (data: User[]) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -24,12 +34,15 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       user: null,
       reports: [],
+      reportsAdmin: [],
       loginUser: (role) => set({ user: { role } }),
-      logout: () => set({ user: null }),
+      logout: () => set({ user: null, reports: [], reportsAdmin: [] }),
       setreports: (data) => set({ reports: data }),
+      setReportsAdmin: (data) => set({ reportsAdmin: data }),
     }),
     {
       name: "auth-storage",
+      partialize: (state) => ({ user: state.user }),
     },
   ),
 );

@@ -8,6 +8,8 @@ import ApplyPassword from "./Page/ApplyPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
 import UploadCSV from "./Page/UploadCSV";
 import ReportsMyAgent from "./Page/ReportsMyAgent";
+import CreateUsersAdminOnly from "./Page/CreateUsersAdminOnly";
+import AllReportAdmin from "./Page/AllUsersAdmin";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         </Route>
         <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
           <Route path="/HomeAdmin" element={<HomeAdmin />} />
+          <Route path="/AddUsers" element={<CreateUsersAdminOnly />} />
+          <Route path="/AllUsers" element={<AllReportAdmin />} />
         </Route>
       </Routes>
     </>

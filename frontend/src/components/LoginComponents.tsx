@@ -38,7 +38,7 @@ export default function LoginComponents() {
       if (axios.isAxiosError(err)) {
         const serverError =
           err.response?.data?.error || "Incorrect login details";
-        setError(serverError);
+        setError(serverError);  
       } else {
         setError("Unexpected error");
       }

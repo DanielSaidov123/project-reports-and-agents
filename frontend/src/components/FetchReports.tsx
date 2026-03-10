@@ -1,19 +1,35 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getRports } from "../api/axios";
 import { useAuthStore } from "../store/useAuthStore";
+import axios from "axios";
 
 export default function FetchReports() {
   const { reports, setreports } = useAuthStore();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errr, setErrr] = useState<null | string>(null);
   useEffect(() => {
     const reportsAgent = async () => {
-      const data = await getRports();
-      setreports(data.data);
+      try {
+        setErrr(null);
+        setLoading(true);
+        const data = await getRports();
+        setreports(data.data);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          const servererror = error.response?.data.error || "error";
+          setErrr(servererror);
+        }
+      } finally {
+        setLoading(false);
+      }
     };
     reportsAgent();
   }, [setreports]);
   console.log(reports);
   return (
     <div className="div-table">
+      {loading && <p>Loading reports...</p>}
+      {errr && <p className="error">{errr}</p>}
       <table className="table">
         <thead>
           <tr className="col-table">
@@ -32,11 +48,7 @@ export default function FetchReports() {
             <tr className="col-table" key={report._id}>
               <td>{report._id}</td>
               <td>{report.category}</td>
-              <td
-                className={`${report.urgency === "high" ? "high" : ""} ${report.urgency === "medium" ? "medium" : ""}${report.urgency === "low" ? "low" : ""}`}
-              >
-                {report.urgency}
-              </td>
+              <td className={report.urgency.toLowerCase()}>{report.urgency}</td>
               <td>{report.message}</td>
               <td>{report.sourceType}</td>
               <td>{report.imagePath}</td>
