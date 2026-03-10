@@ -28,8 +28,8 @@
   padding: 0 1rem;
 }
 
-.nav-agent button {
-  height: 35px;
+ .NavLink {
+  height: 50px;
   margin: 1rem;
 }
 
