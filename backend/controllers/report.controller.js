@@ -72,7 +72,6 @@ export const createReportCsv = async (req, res) => {
 export const filterReport = async (req, res) => {
   try {
     const role = req.user.role;
-
     if (!role) {
       return res.status(401).json({ error: "token is not defind" });
     }
@@ -94,11 +93,12 @@ export const filterReport = async (req, res) => {
     }
 
     if (req.query.agentCode && role === "admin") {
-      const userId = User.findOne({agentCode :req.query.agentCode })
+      const userId = await User.findOne({agentCode :req.query.agentCode })
+      console.log(userId._id)
       if(!userId){
         return res.status(404).json({error : "agentCode is not defind"})
        };
-      report = report.filter((r) => r.userId === userId);
+      report = report.filter((r) =>  r.userId.toString() == userId._id.toString());
     }
 
     res.status(200).json(report);

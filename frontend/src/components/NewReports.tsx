@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createRports } from "../api/axios";
-import axios from "axios";
+import { useRequest } from "../Hooks/useRequest";
 
 export default function NewReports() {
   const [reports, setReports] = useState({
@@ -9,7 +9,7 @@ export default function NewReports() {
     message: "",
     imagePath: null as File | null,
   });
-
+  const { request, loading, error,success } = useRequest();
   const handleSubmit = async (e: React.FormEvent) => {
     const formData = new FormData();
     formData.append("category", reports.category);
@@ -17,17 +17,11 @@ export default function NewReports() {
     formData.append("message", reports.message);
 
     if (reports.imagePath) {
-      formData.append("image", reports.imagePath); 
+      formData.append("image", reports.imagePath);
     }
     e.preventDefault();
-    console.log(formData)
-    try {
-      await createRports(formData);
-    } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        console.log(err.response?.data?.error);
-      }
-    }
+
+    await request(() => createRports(formData));
   };
 
   return (
@@ -74,7 +68,9 @@ export default function NewReports() {
           }
         />
       </div>
-      <button type="submit">create reports</button>
+      <button type="submit">{loading && <p>loading...</p>}{!loading && <p>create Rport</p>}</button>
+      {error && <p className="error">{error}</p>}
+     {success && <p className="success">Created Report!</p>}
     </form>
   );
 }

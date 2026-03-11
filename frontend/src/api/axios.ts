@@ -17,4 +17,4 @@ export const getRportsfilter = (data:object)=> API.get("/report/filter",{params 
 
 export const signup= (data:object)=> API.post("/auth/signup",data) 
 
-export const getRportsAdmin= ()=> API.get("/users") 
+export const getRportsAdmin= ()=> API.get("/users")

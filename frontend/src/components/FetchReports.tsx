@@ -13,7 +13,7 @@ type Report = {
 export default function FetchReports() {
   const [form, serForm] = useState({
     category: "",
-    urgency: "low",
+    urgency: "",
     agentCode: "",
   });
   const [reports, setreports] = useState<Report[]>([]);
@@ -29,14 +29,14 @@ export default function FetchReports() {
         ...(form.agentCode && { agentCode: form.agentCode }),
         ...(form.urgency && { urgency: form.urgency }),
       };
+      console.log(form)
       console.log(filter)
       const data = await getRportsfilter(filter);
-      console.log(data.data);
       setreports(data.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const servererror = error.response?.data?.error;
-        console.log(error)
+        console.log(error);
         setErrr(servererror);
       }
     } finally {
@@ -82,6 +82,7 @@ export default function FetchReports() {
           value={form.urgency}
           onChange={(e) => serForm({ ...form, urgency: e.target.value })}
         >
+          <option value="">All</option>
           <option value="low">low</option>
           <option value="medium">medium</option>
           <option value="high">high</option>
