@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
+import Logout from "./Logout";
 
 export default function Navbar() {
   const {user} = useAuthStore()
@@ -13,6 +14,9 @@ export default function Navbar() {
         <NavLink className="NavLink" to='/ReportsMyAgent'> <button>my reports</button></NavLink>
         {user?.role==='admin'&&(<><NavLink className="NavLink" to='/AddUsers'> <button>Add Agent</button></NavLink>
         <NavLink className="NavLink" to='/AllUsers'> <button>All Users</button></NavLink> </>)}
+        <NavLink className="NavLink" to='/'><Logout/></NavLink>
+        
+
       </div>
     </nav>
   );

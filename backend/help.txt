@@ -1,0 +1,12 @@
+npm i bcrypt
+npm i cookie-parser
+npm i cors
+npm i csv
+npm i csv-parser
+npm i dotenv
+npm i express
+npm i express-fileupload
+npm i jsonwebtoken
+npm i mongoose
+npm i multer
+npm i nodemon
