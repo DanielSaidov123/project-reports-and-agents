@@ -1,8 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
 
-
-
 export function useRequest<T>() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
