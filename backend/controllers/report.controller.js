@@ -85,7 +85,7 @@ export const filterReport = async (req, res) => {
     }
 
     if (req.query.category) {
-      report = report.filter((r) => r.category === req.query.category);
+      report = report.filter((r) => r.category == req.query.category);
     }
 
     if (req.query.urgency) {
@@ -93,12 +93,14 @@ export const filterReport = async (req, res) => {
     }
 
     if (req.query.agentCode && role === "admin") {
-      const userId = await User.findOne({agentCode :req.query.agentCode })
-      console.log(userId._id)
-      if(!userId){
-        return res.status(404).json({error : "agentCode is not defind"})
-       };
-      report = report.filter((r) =>  r.userId.toString() == userId._id.toString());
+      const userId = await User.findOne({ agentCode: req.query.agentCode });
+      console.log(userId._id);
+      if (!userId) {
+        return res.status(404).json({ error: "agentCode is not defind" });
+      }
+      report = report.filter(
+        (r) => r.userId.toString() == userId._id.toString(),
+      );
     }
 
     res.status(200).json(report);
@@ -112,14 +114,14 @@ export const getReportBiId = async (req, res) => {
     const role = req.user.role;
 
     const id = req.params.id;
-
     const report = await Report.findOne({ _id: id });
-
+    console.log(report)
     if (!report) {
       return res.status(404).json({ error: "report is not defind" });
     }
+    
     if (role === "agent") {
-      if (req.user.id !== report.userId) {
+      if (req.user.id.toString() !== report.userId.toString()) {
         return res
           .status(403)
           .json({ error: "You do not have permission to access this report" });
@@ -130,5 +132,3 @@ export const getReportBiId = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
- 
