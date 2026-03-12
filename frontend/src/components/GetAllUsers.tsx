@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
 import { getRportsAdmin } from "../api/axios";
-import { useAuthStore } from "../store/useAuthStore";
 import axios from "axios";
 
+type User = {
+  _id: string;
+  agentCode: string;
+  fullName: string;
+  SourceType: string;
+  role:string
+  createdAt: string;
+};
+
 export default function GetAllUsers() {
-  const { setReportsAdmin, reportsAdmin } = useAuthStore();
+  const [  users,   setUsers ] =  useState<User[]>([])
   const [loading, setLoading] = useState<boolean>(false);
   const [errr, setErrr] = useState<null | string>(null);
   useEffect(() => {
@@ -13,7 +21,7 @@ export default function GetAllUsers() {
         setLoading(true);
         setErrr(null);
         const data = await getRportsAdmin();
-        setReportsAdmin(data.data);
+        setUsers(data.data);
       } catch (error) {
         if (axios.isAxiosError(error)) {
           const serverError = error.response?.data.error || "error";
@@ -24,9 +32,9 @@ export default function GetAllUsers() {
       }
     };
     allreports();
-  }, [setReportsAdmin]);
+  }, []);
 
-  console.log(reportsAdmin);
+  console.log(users);
   return (
     <div  className=" ">
       {loading && <p>loading...</p>}
@@ -43,7 +51,7 @@ export default function GetAllUsers() {
         </thead>
 
         <tbody>
-          {reportsAdmin.map((user) => (
+          {users.map((user:User) => (
             <tr className="col-table" key={user._id}>
               <td>{user._id}</td>
               <td>{user.agentCode}</td>
